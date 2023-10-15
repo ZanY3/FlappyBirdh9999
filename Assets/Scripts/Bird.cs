@@ -6,13 +6,73 @@ using TMPro;
 
 public class Bird : MonoBehaviour
 {
+    public string[] SkinList;
+    public string[] BackList;
     int Score;
     public TMP_Text ScoreText;
     public float rotatePower;
     public float jumpSpeed;
     Rigidbody2D rb;
+    public GameObject endScreen;
+
+    public GameObject YellowSkin;
+    public GameObject RedSkin;
+    public GameObject BlueSkin;
+
+    public GameObject Night;
+    public GameObject Day;
+
+
+    public float speed;
     void Start()
     {
+        if(BackList.Length > 0)
+        {
+            int randomIndex = Random.Range(0, BackList.Length);
+            string randomBg = BackList[randomIndex];
+            if (randomBg == "Night")
+            {
+                Night.SetActive(true);
+                Day.SetActive(false);
+            }
+            if (randomBg == "Day")
+            {
+                Night.SetActive(false);
+                Day.SetActive(true);
+
+
+            }
+        }
+
+        if(SkinList.Length > 0)
+        {
+            int randomInx = Random.Range(0, SkinList.Length);
+            string randomSkin = SkinList[randomInx];
+            if(randomSkin == "YellowSkin")
+            {
+                YellowSkin.SetActive(true);
+                RedSkin.SetActive(false);
+                BlueSkin.SetActive(false);
+
+            }
+            if (randomSkin == "BlueSkin")
+            {
+                YellowSkin.SetActive(false);
+                RedSkin.SetActive(false);
+                BlueSkin.SetActive(true);
+
+            }
+            if (randomSkin == "RedSkin")
+            {
+                YellowSkin.SetActive(false);
+                RedSkin.SetActive(true);
+                BlueSkin.SetActive(false);
+
+            }
+
+        }
+
+        Pipe.speed = speed;
         rb = GetComponent<Rigidbody2D>();
     }
     void Update()
@@ -30,10 +90,18 @@ public class Bird : MonoBehaviour
     }
     void Die()
     {
-        var sceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(sceneName);
-
+        jumpSpeed = 0;
+        Pipe.speed = 0;
+        rb.velocity = Vector2.zero;
+        //GetComponentInChildren<Animator>().enabled = false;
+        Invoke("ShowMenu", 1f);
     }
+        void ShowMenu()
+        {
+            print("The end");
+            endScreen.SetActive(true);
+            ScoreText.gameObject.SetActive(false);
+        }
     private void OnTriggerEnter2D(Collider2D other)
     {
         Score++;
