@@ -22,8 +22,15 @@ public class Bird : MonoBehaviour
     public GameObject Night;
     public GameObject Day;
 
-
     public float speed;
+    public GameObject Tutorial;
+
+    public AudioClip scoreSound;
+    public AudioClip punchSound;
+
+    public GameObject Flash;
+
+    public AudioSource source;
     void Start()
     {
         if(BackList.Length > 0)
@@ -79,6 +86,10 @@ public class Bird : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Mouse0))
         {
+            Pipe.speed = 5.5f;
+            rb.gravityScale = 3;
+            Tutorial.SetActive(false);
+            ScoreText.gameObject.SetActive(true);
             rb.velocity = Vector2.up * jumpSpeed;
         }
             transform.eulerAngles = new Vector3(0, 0, rb.velocity.y * rotatePower);
@@ -86,6 +97,7 @@ public class Bird : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        source.PlayOneShot(punchSound);
         Die();
     }
     void Die()
@@ -95,6 +107,9 @@ public class Bird : MonoBehaviour
         rb.velocity = Vector2.zero;
         //GetComponentInChildren<Animator>().enabled = false;
         Invoke("ShowMenu", 1f);
+        PlayerPrefs.SetInt("Score", Score);
+        Flash.SetActive(true);
+
     }
         void ShowMenu()
         {
@@ -104,6 +119,7 @@ public class Bird : MonoBehaviour
         }
     private void OnTriggerEnter2D(Collider2D other)
     {
+        source.PlayOneShot(scoreSound);
         Score++;
         ScoreText.text = Score.ToString();
     }
