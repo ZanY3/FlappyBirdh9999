@@ -27,6 +27,7 @@ public class Bird : MonoBehaviour
 
     public AudioClip scoreSound;
     public AudioClip punchSound;
+    public AudioClip Flap;
 
     public GameObject Flash;
 
@@ -86,6 +87,7 @@ public class Bird : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Mouse0))
         {
+            source.PlayOneShot(Flap);
             Pipe.speed = 5.5f;
             rb.gravityScale = 3;
             Tutorial.SetActive(false);

@@ -466,6 +466,7 @@ MonoBehaviour:
   Tutorial: {fileID: 287667531}
   scoreSound: {fileID: 8300000, guid: 509d80832d3d8f44b863b8cf1f5a05c1, type: 3}
   punchSound: {fileID: 8300000, guid: 2ad3fa1a90dfdbf4c944e9654c92290c, type: 3}
+  Flap: {fileID: 8300000, guid: 29181daffa2d22448b93c91c772618d4, type: 3}
   Flash: {fileID: 1531313228}
   source: {fileID: 192682499}
 --- !u!82 &192682499
@@ -482,7 +483,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
